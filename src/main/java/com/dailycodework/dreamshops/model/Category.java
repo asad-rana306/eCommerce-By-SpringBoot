@@ -8,4 +8,5 @@ public class Category {
     private String name;
 
     private List<Product> products;
+    private int number;
 }
