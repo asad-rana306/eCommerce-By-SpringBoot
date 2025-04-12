@@ -1,5 +1,6 @@
 package com.dailycodework.dreamshops.Services.ProductService;
 
+import com.dailycodework.dreamshops.exceptions.ProductNotFoundException;
 import com.dailycodework.dreamshops.model.Product;
 import com.dailycodework.dreamshops.repository.ProductRepository;
 
@@ -15,12 +16,15 @@ public class ProductService implements IProductService{
 
     @Override
     public Product getProductById(Long id) {
-        return null;
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
     }
 
     @Override
     public void deleteProduct(Long id) {
-
+        productRepository.findById(id).ifPresentOrElse(productRepository::delete, () -> {
+            throw new ProductNotFoundException("Product not found");
+        });
     }
 
     @Override
@@ -30,36 +34,36 @@ public class ProductService implements IProductService{
 
     @Override
     public List<Product> getAllProducts() {
-        return List.of();
+        return productRepository.findAll();
     }
 
     @Override
     public List<Product> getProductsByCategory(Product category) {
-        return List.of();
+        return productRepository.findByCategoryName(category);
     }
 
     @Override
     public List<Product> getProductsByBrand(String brand) {
-        return List.of();
+        return productRepository.findByBrand(brand);
     }
 
     @Override
     public List<Product> getProductsByCategoryAndBrand(String category, String brand) {
-        return List.of();
+        return productRepository.findByCategoryNameandBrand(category, brand);
     }
 
     @Override
     public List<Product> getProductsByName(String name) {
-        return List.of();
+        return productRepository.findByName(name);
     }
 
     @Override
     public List<Product> getProductByBrandAndName(String brand, String name) {
-        return List.of();
+        return productRepository.findByBrandandName(brand, name);
     }
 
     @Override
     public Long countProductsByBrandAndName(String brand, String name) {
-        return 0;
+        return productRepository.countByBrandAndName(brand, name);
     }
 }
