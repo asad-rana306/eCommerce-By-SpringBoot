@@ -1,11 +1,13 @@
 package com.dailycodework.dreamshops.Services.image;
 
 import com.dailycodework.dreamshops.Services.ProductService.IProductService;
+import com.dailycodework.dreamshops.dto.imageDto;
 import com.dailycodework.dreamshops.exceptions.ResourceNotFoundException;
 import com.dailycodework.dreamshops.model.Image;
 import com.dailycodework.dreamshops.model.Product;
 import com.dailycodework.dreamshops.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,8 +22,9 @@ import java.util.List;
 public class ImageService implements IImageService{
     private final ImageRepository imageRepository;
     private final IProductService productService;
-    private imageDto imageDto;
 
+    @Autowired
+    private imageDto imageDto;
     @Override
     public Image getImageById(Long id) {
         return imageRepository.findById(id)
@@ -50,9 +53,9 @@ public class ImageService implements IImageService{
     }
 
     @Override
-    public Image saveImage(List<MultipartFile> file, Long productId) {
+    public Image saveImage(List<MultipartFile> files, Long productId) {
         Product product = productService.getProductById(productId);
-        List<ImageDto> imageDtos = new ArrayList<>();
+        List<imageDto> savedImageDto = new ArrayList<>();
         for(MultipartFile file1: files){
             try{
                 Image image = new Image();
@@ -68,14 +71,14 @@ public class ImageService implements IImageService{
                 saveImage.setDownloadUrl(buildDownloadUrl + saveImage.getId());
                 imageRepository.save(saveImage);
 
-                ImageDto imageDto = new ImageDto();
+                imageDto imageDto = new imageDto();
                 imageDto.setImageId(saveImage.getId());
                 imageDto.setImageName(saveImage.getFileName());
                 image.setDownloadUrl(saveImage.getDownloadUrl());
-                imageDtos.
-            }catch ({
+                savedImageDto.add(imageDto);
+            }catch(IOException ){
 
-            })
+            }
         }
 
     }
