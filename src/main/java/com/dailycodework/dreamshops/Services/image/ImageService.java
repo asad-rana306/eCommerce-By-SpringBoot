@@ -20,6 +20,7 @@ import java.util.List;
 public class ImageService implements IImageService{
     private final ImageRepository imageRepository;
     private final IProductService productService;
+    private imageDto imageDto;
 
     @Override
     public Image getImageById(Long id) {
