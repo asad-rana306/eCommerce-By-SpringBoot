@@ -19,21 +19,22 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ImageService implements IImageService{
+public class ImageService implements IImageService {
     private final ImageRepository imageRepository;
     private final IProductService productService;
 
     @Autowired
     private imageDto imageDto;
+
     @Override
     public Image getImageById(Long id) {
         return imageRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("No image found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("No image found with id: " + id));
     }
 
     @Override
     public void deleteImage(Long id) {
-        imageRepository.findById(id).ifPresentOrElse(imageRepository::delete,()->{
+        imageRepository.findById(id).ifPresentOrElse(imageRepository::delete, () -> {
             throw new ResourceNotFoundException("No image found with id: " + id);
         });
     }
@@ -53,11 +54,11 @@ public class ImageService implements IImageService{
     }
 
     @Override
-    public Image saveImage(List<MultipartFile> files, Long productId) {
+    public List<imageDto> saveImages(List<MultipartFile> files, Long productId) {
         Product product = productService.getProductById(productId);
         List<imageDto> savedImageDto = new ArrayList<>();
-        for(MultipartFile file1: files){
-            try{
+        for (MultipartFile file1 : files) {
+            try {
                 Image image = new Image();
                 image.setFileName(file1.getOriginalFilename());
                 image.setFileType(file1.getContentType());
@@ -76,10 +77,11 @@ public class ImageService implements IImageService{
                 imageDto.setImageName(saveImage.getFileName());
                 image.setDownloadUrl(saveImage.getDownloadUrl());
                 savedImageDto.add(imageDto);
-            }catch(IOException ){
+            } catch (IOException | SQLException e1) {
+                throw new RuntimeException(e1.getMessage());
 
             }
         }
-
+        return savedImageDto;
     }
 }
