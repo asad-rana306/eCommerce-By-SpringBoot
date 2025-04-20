@@ -40,6 +40,7 @@ public class CategoryController {
             return ResponseEntity.status(CONFLICT).body(new ApiResponse(e.getMessage(), null));
         }
     }
+    @GetMapping("/category/{id}/category")
     public ResponseEntity<ApiResponse> getCategoryById(@PathVariable Long id){
         try {
             Category category = categoryService.getCategoryById(id);
@@ -48,5 +49,32 @@ public class CategoryController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Error:",INTERNAL_SERVER_ERROR));
         }
 
+    }
+    @GetMapping("category/{name}/category")
+    public ResponseEntity<ApiResponse> getCategoryByName(@PathVariable String name){
+        try {
+            Category category = categoryService.getCategoryByName(name);
+            return ResponseEntity.ok(new ApiResponse("Found!",category));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Error:",INTERNAL_SERVER_ERROR));
+        }
+    }
+    @DeleteMapping("/category/{id}/delete")
+    public ResponseEntity<ApiResponse> deleteCategory(@PathVariable Long id){
+        try {
+            categoryService.deleteCategory(id);
+            return ResponseEntity.ok(new ApiResponse("Deleted!",null));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Error:",INTERNAL_SERVER_ERROR));
+        }
+    }
+    @PutMapping("/category/{id}/update")
+    public ResponseEntity<ApiResponse> updateCategory(@PathVariable Long id, @RequestBody Category category){
+        try {
+            Category updatedCategory = categoryService.updateCategory(category, id);
+            return ResponseEntity.ok(new ApiResponse("Updated!",updatedCategory));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Error:",INTERNAL_SERVER_ERROR));
+        }
     }
 }
