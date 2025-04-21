@@ -3,16 +3,17 @@ package com.dailycodework.dreamshops.Controller;
 import com.dailycodework.dreamshops.Services.ProductService.IProductService;
 import com.dailycodework.dreamshops.exceptions.ResourceNotFoundException;
 import com.dailycodework.dreamshops.model.Product;
+import com.dailycodework.dreamshops.request.AddProductRequest;
+import com.dailycodework.dreamshops.request.ProductUpdateRequest;
 import com.dailycodework.dreamshops.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RequiredArgsConstructor
@@ -37,4 +38,53 @@ public class ProductController {
                     .body(new ApiResponse(e.getMessage(), null));
         }
     }
+    @GetMapping("/add")
+    public ResponseEntity<ApiResponse> addProduct(@RequestBody AddProductRequest product){
+        try {
+            Product savedProduct = productService.addProduct(product);
+            return ResponseEntity.ok(new ApiResponse("Product added successfully", savedProduct));
+        } catch (Exception e) {
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
+    @PutMapping("/update/{productId}/update")
+    public ResponseEntity<ApiResponse> updateProduct(@RequestBody ProductUpdateRequest request,
+                                                     @PathVariable Long productId){
+        try {
+            Product updatedProduct = productService.updateProduct(request, productId);
+            return ResponseEntity.ok(new ApiResponse("Product updated successfully", updatedProduct));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
+    @DeleteMapping("/product/{productId}/delete")
+    public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long productId){
+        try {
+            productService.deleteProduct(productId);
+            return ResponseEntity.ok(new ApiResponse("Product deleted successfully", null));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
+
+    // get product by brand name and product name
+    @GetMapping("/brand/{brandName}/product/{productName}")
+    public ResponseEntity<ApiResponse> getProductByBrandAndName(@PathVariable String brandName,
+                                                                 @PathVariable String productName){
+        try {
+            List<Product> products = productService.getProductByBrandAndName(brandName, productName);
+            if(products.isEmpty()){
+                return ResponseEntity.status(NOT_FOUND)
+                        .body(new ApiResponse("No products found", null));
+            }
+            return ResponseEntity.ok(new ApiResponse("Product fetched successfully", products));
+        } catch (Exception e){
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
+
 }
