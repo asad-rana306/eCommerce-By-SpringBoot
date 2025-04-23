@@ -6,9 +6,11 @@ import com.dailycodework.dreamshops.exceptions.ResourceNotFoundException;
 import com.dailycodework.dreamshops.model.Category;
 import com.dailycodework.dreamshops.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -20,7 +22,8 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 @RequestMapping("${api.prefix}/categories")
 public class CategoryController {
 
-    public final ICategoryService categoryService;
+    @Autowired
+    public ICategoryService categoryService;
     @GetMapping("/all")
     public ResponseEntity<ApiResponse> getAllCategories(){
         try {

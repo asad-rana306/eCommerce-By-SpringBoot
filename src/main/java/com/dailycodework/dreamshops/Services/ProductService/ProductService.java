@@ -90,7 +90,7 @@ public class ProductService implements IProductService{
 
     @Override
     public List<Product> getProductsByCategoryAndBrand(String category, String brand) {
-        return productRepository.findByCategoryNameandBrand(category, brand);
+        return productRepository.findByCategoryNameAndBrand(category, brand);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class ProductService implements IProductService{
 
     @Override
     public List<Product> getProductByBrandAndName(String brand, String name) {
-        return productRepository.findByBrandandName(brand, name);
+        return productRepository.findByBrandAndName(brand, name);
     }
 
     @Override

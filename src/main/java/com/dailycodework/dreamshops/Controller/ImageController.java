@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +25,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("${api.prefix}/image")
+@Component
 public class ImageController {
     private final IImageService iImageService;
 
@@ -39,10 +41,10 @@ public class ImageController {
 
     @GetMapping("/image/download/{imageId}")
     public ResponseEntity<Resource> download(@PathVariable Long imageId) throws SQLException {
-        Image image = iImageService.getImageById(imageId);
-        ByteArrayResource resource = new ByteArrayResource(image.getImage().getBytes(1, (int) image.getImage().length()));
-        return ResponseEntity.ok().contentType(MediaType.parseMediaType(image.getFileType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\" " + image.getFileName() + "\"")
+        Image img = iImageService.getImageById(imageId);
+        ByteArrayResource resource = new ByteArrayResource(img.getImage().getBytes(1, (int) img.getImage().length()));
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(img.getFileType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\" " + img.getFileName() + "\"")
                 .body(resource);
     }
 
