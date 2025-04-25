@@ -11,4 +11,6 @@ public interface IImageService {
     void deleteImage(Long id);
     void updateImage(MultipartFile file, Long imageId);
     List<imageDto> saveImages(List<MultipartFile> files, Long productId);
+    //this is a interface which takes promise like who implements it
+    // must have this method
 }
