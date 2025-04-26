@@ -1,11 +1,12 @@
 package com.dailycodework.dreamshops.dto;
 
-import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.stereotype.Service;
+import lombok.NoArgsConstructor;
 
-@Service
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class imageDto {
     private Long imageId;
     private String imageName;

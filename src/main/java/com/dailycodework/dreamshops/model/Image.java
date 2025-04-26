@@ -26,6 +26,5 @@ public class Image {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    @JsonIgnoreProperties("image")
     private Product product;
 }

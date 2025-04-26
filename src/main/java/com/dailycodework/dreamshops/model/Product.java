@@ -30,11 +30,9 @@ public class Product {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
-    @JsonBackReference
     private Category category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private List<Image> image;
 
     public Product(String name, String brand, BigDecimal price, int inventory, String description, Category category) {

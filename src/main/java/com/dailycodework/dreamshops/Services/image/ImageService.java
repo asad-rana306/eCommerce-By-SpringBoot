@@ -7,7 +7,6 @@ import com.dailycodework.dreamshops.model.Image;
 import com.dailycodework.dreamshops.model.Product;
 import com.dailycodework.dreamshops.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,8 +22,6 @@ public class ImageService implements IImageService {
     private final ImageRepository imageRepository;
     private final IProductService productService;
 
-    @Autowired
-    private imageDto imageDto;
 
     @Override
     public Image getImageById(Long id) {
