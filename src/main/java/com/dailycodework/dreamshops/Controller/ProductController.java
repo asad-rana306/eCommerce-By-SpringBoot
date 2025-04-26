@@ -123,7 +123,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/search/brand")
+    @GetMapping("/product/by-brand")
     public ResponseEntity<ApiResponse> findProductByBrand(@RequestParam String brand) {
         try {
             List<Product> products = productService.getProductsByBrand(brand);
