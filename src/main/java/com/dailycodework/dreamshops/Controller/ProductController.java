@@ -138,7 +138,7 @@ public class ProductController {
     }
 
     @GetMapping("/category/{categoryName}")
-    public ResponseEntity<ApiResponse> findProductByCategory(@PathVariable Product categoryName) {
+    public ResponseEntity<ApiResponse> findProductByCategory(@PathVariable String categoryName) {
         try {
             List<Product> products = productService.getProductsByCategory(categoryName);
             return products.isEmpty() ?
