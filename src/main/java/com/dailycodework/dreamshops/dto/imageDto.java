@@ -12,3 +12,4 @@ public class imageDto {
     private String imageName;
     private String downloadUrl;
 }
+// we need dto class to stop the recursion of image and product
