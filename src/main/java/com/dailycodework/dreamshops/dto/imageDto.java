@@ -8,8 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class imageDto {
-    private Long imageId;
-    private String imageName;
+    private Long id;
+    private String fileName;
     private String downloadUrl;
 }
-// we need dto class to stop the recursion of image and product

@@ -1,6 +1,7 @@
 package com.dailycodework.dreamshops.Controller;
 
 import com.dailycodework.dreamshops.Services.ProductService.IProductService;
+import com.dailycodework.dreamshops.dto.ProductDto;
 import com.dailycodework.dreamshops.model.Product;
 import com.dailycodework.dreamshops.request.AddProductRequest;
 import com.dailycodework.dreamshops.request.ProductUpdateRequest;
