@@ -2,7 +2,6 @@ package com.dailycodework.dreamshops.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.sql.Blob;
 

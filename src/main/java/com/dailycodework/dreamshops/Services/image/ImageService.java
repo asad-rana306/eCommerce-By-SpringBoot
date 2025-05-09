@@ -70,8 +70,8 @@ public class ImageService implements IImageService {
                 imageRepository.save(saveImage);
 
                 imageDto imageDto = new imageDto();
-                imageDto.setImageId(saveImage.getId());
-                imageDto.setImageName(saveImage.getFileName());
+                imageDto.setId(saveImage.getId());
+                imageDto.setFileName(saveImage.getFileName());
                 image.setDownloadUrl(saveImage.getDownloadUrl());
                 savedImageDto.add(imageDto);
             } catch (IOException | SQLException e1) {
