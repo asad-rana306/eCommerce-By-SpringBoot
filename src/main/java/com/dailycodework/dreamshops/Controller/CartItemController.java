@@ -1,5 +1,6 @@
 package com.dailycodework.dreamshops.Controller;
 
+import com.dailycodework.dreamshops.Services.cart.CartItemService;
 import com.dailycodework.dreamshops.Services.cart.ICartItemService;
 import com.dailycodework.dreamshops.Services.cart.ICartService;
 import com.dailycodework.dreamshops.exceptions.ResourceNotFoundException;
@@ -14,10 +15,10 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @RestController
 @RequestMapping("${api.prefix}/cartItems")
 public class CartItemController {
-    private final ICartItemService cartItemService;
+    private final CartItemService cartItemService;
     private final ICartService cartService;
     @PostMapping("/item/add")
-    public ResponseEntity<ApiResponse> addItemToCart(@RequestParam Long cartId,
+    public ResponseEntity<ApiResponse> addItemToCart(@RequestParam(required = false) Long cartId,
                                                      @RequestParam Long productId,
                                                      @RequestParam Integer quantity){
         try {

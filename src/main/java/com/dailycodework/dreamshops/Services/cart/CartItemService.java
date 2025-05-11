@@ -9,6 +9,7 @@ import com.dailycodework.dreamshops.repository.CartItemRepository;
 import com.dailycodework.dreamshops.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -19,6 +20,7 @@ public class CartItemService implements ICartItemService{
     private final CartRepository cartRepository;
     private final IProductService productService;
     private final ICartService cartService;
+    @Transactional
     @Override
     public void addItemToCart(Long cartId, Long productId, int quantity) {
         Cart cart = cartService.getCart(cartId);
@@ -37,7 +39,6 @@ public class CartItemService implements ICartItemService{
         }
         cartItem.setTotalPrice();
         cart.addItem(cartItem);
-        cartItemRepository.save(cartItem);
         cartRepository.save(cart);
     }
 
