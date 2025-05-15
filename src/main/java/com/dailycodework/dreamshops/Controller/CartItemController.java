@@ -15,7 +15,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @RestController
 @RequestMapping("${api.prefix}/cartItems")
 public class CartItemController {
-    private final CartItemService cartItemService;
+    private final ICartItemService cartItemService;
     private final ICartService cartService;
     @PostMapping("/item/add")
     public ResponseEntity<ApiResponse> addItemToCart(@RequestParam(required = false) Long cartId,
@@ -44,10 +44,10 @@ public class CartItemController {
 
     @PutMapping("/cart/{cartId}/item/{itemId}/update")
     public ResponseEntity<ApiResponse> updateItemQuantity(@PathVariable Long cartId,
-                                                          @PathVariable Long productId,
-                                                          @PathVariable Integer quantity){
+                                                          @PathVariable Long itemId,
+                                                          @RequestParam Integer quantity){
         try {
-            cartItemService.updateItemQuantity(cartId, productId, quantity);
+            cartItemService.updateItemQuantity(cartId, itemId, quantity);
             return ResponseEntity.ok(new ApiResponse("Update Item Sucess", null));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(),null));
