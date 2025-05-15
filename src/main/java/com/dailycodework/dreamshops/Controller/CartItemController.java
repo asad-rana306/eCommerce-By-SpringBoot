@@ -24,7 +24,6 @@ public class CartItemController {
         try {
             if(cartId == null ){
                 cartId = cartService.initializeNewCart();
-                // the code does not move forward from here. so i am checking again today
             }
             cartItemService.addItemToCart(cartId, productId, quantity);
             return ResponseEntity.ok(new ApiResponse("add Item sucess",null));
