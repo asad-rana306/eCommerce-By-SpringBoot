@@ -49,4 +49,3 @@ public class CartController {
         }
     }
 }
-//understanding the code architecture
